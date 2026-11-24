@@ -20,8 +20,10 @@ def main() -> None:
     if "\n" in line or "\r" in line:
         raise SystemExit("line must be a single line")
 
-    out_dir = "/output" if os.path.isdir("/output") else os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "output"
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or (
+        "/output"
+        if os.path.isdir("/output")
+        else os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
     )
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
